@@ -1,0 +1,21 @@
+(()=>{const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const h=$('#hdr'),on=()=>h.classList.toggle('sc',scrollY>8);on();addEventListener('scroll',on,{passive:true});
+const b=$('#burger'),n=$('#nav');b.onclick=()=>{const o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Tutup menu':'Buka menu')};
+$$('.ddb').forEach(x=>x.onclick=()=>{const p=x.parentElement,o=p.classList.toggle('open');x.setAttribute('aria-expanded',o)});
+addEventListener('keydown',e=>{if(e.key==='Escape'){n.classList.remove('open');$$('.has-dd.open').forEach(x=>x.classList.remove('open'))}});
+$$('.gi').forEach(f=>f.classList.add('rv'));
+const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1}):null;
+$$('.rv').forEach((el,i)=>{el.style.setProperty('--i',i%3);io?io.observe(el):el.classList.add('in')});
+const g=$('#gal');if(g){$$('.fb-btn').forEach(x=>x.onclick=()=>{$$('.fb-btn').forEach(y=>y.setAttribute('aria-pressed',y===x));$$('.gi',g).forEach(i=>i.hidden=x.dataset.f!=='semua'&&i.dataset.c!==x.dataset.f)});
+const d=$('#lb');$$('.gb').forEach(x=>x.onclick=()=>{$('img',d).src=x.dataset.full;$('img',d).alt=x.dataset.alt;$('p',d).textContent=x.dataset.alt;d.showModal()});
+$('.lb-x').onclick=()=>d.close();d.onclick=e=>{if(e.target===d)d.close()}}
+const f=$('#f');if(f){const q=new URLSearchParams(location.search);if(q.get('program'))[...$('#program').options].forEach(o=>{if(o.text===q.get('program'))o.selected=true});
+const bad=(el,m)=>{const p=el.closest('.fld');p.classList.toggle('bad',!!m);$('.err',p).textContent=m||'';return!m};
+f.onsubmit=e=>{e.preventDefault();let ok=true;
+ok&=bad($('#ortu'),$('#ortu').value.trim().length<2?'Isi nama orang tua.':'');
+ok&=bad($('#wa'),/^(\+62|62|0)8\d{7,12}$/.test($('#wa').value.replace(/[\s-]/g,''))?'':'Isi nomor WhatsApp yang valid, contoh 0812xxxxxxx.');
+ok&=bad($('#usia'),/^\d{1,2}$/.test($('#usia').value.trim())?'':'Isi usia anak dengan angka.');
+ok&=bad($('#kelas'),$('#kelas').value.trim()?'':'Isi jenjang atau kelas.');ok&=bad($('#program'),$('#program').value?'':'Pilih program.');
+if(!ok)return;const v=i=>$(i).value.trim();
+const m=`Halo Bimbel AKSI, saya ingin berkonsultasi mengenai program belajar.\n\nNama orang tua: ${v('#ortu')}\nNama siswa: ${v('#siswa')||'-'}\nUsia: ${v('#usia')} tahun\nKelas: ${v('#kelas')}\nProgram: ${v('#program')}\nPesan: ${v('#pesan')||'-'}\n\nTerima kasih.`;
+location.href=`https://wa.me/${f.dataset.wa}?text=${encodeURIComponent(m)}`}}})();
